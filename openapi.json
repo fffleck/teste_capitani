@@ -1,0 +1,167 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Api Payment Test",
+    "version": "1.0.0",
+    "description": "API para gestão de pagamentos (PIX e CREDIT_CARD - Gateway de pagamento (Mercado Pago))",
+    "author": "Fabio Fleck"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/api/payment": {
+      "post": {
+        "summary": "Criar pagamento",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpf": {
+                    "type": "string",
+                    "example": "12345678901"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "example": 100.5
+                  },
+                  "paymentMethod": {
+                    "type": "string",
+                    "enum": [
+                      "PIX",
+                      "CREDIT_CARD"
+                    ]
+                  }
+                },
+                "required": [
+                  "cpf",
+                  "amount",
+                  "paymentMethod"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pagamento criado"
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar pagamentos",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paymentMethod",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PIX",
+                "CREDIT_CARD"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de pagamentos"
+          }
+        }
+      }
+    },
+    "/api/payment/{id}": {
+      "get": {
+        "summary": "Obter pagamento por id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do pagamento"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar pagamento",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "PENDING",
+                      "PAID",
+                      "FAIL"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pagamento atualizado"
+          }
+        }
+      }
+    },
+    "/api/payment/callback": {
+      "post": {
+        "summary": "Webhook callback Mercado Pago",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Recebe notificações do Mercado Pago"
+          }
+        }
+      }
+    }
+  }
+}
