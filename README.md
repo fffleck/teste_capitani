@@ -42,3 +42,15 @@ Exemplo (Linux/Mac):
 ```
 USE_MOCK_MERCADOPAGO=true docker-compose up --build
 ```
+
+
+
+Ps - Essa Aplicacao foi desenvolvida e testada em ambiente APPLE, caso não funcione em ambiente linux sera preciso revisar o arquivo 
+../prisma/schema.prisma, e a sua utilizacao correta 
+
+Qualquer duvida pode entrar em contato com o email ffleck@gmail.com ou pelo whats (48) 9 8463 0779 
+
+Att.
+Fabio Fleck 
+
+
